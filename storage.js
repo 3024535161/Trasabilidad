@@ -1,125 +1,250 @@
-// =======================================
-// STORAGE.JS
-// CRM PORTABILIDAD PRO
-// =======================================
+// ==========================================
+// CRM PORTABILIDAD PRO V2
+// storage.js
+// ==========================================
 
-const STORAGE = "crm_portabilidad_pro";
+// ---------- Base de datos ----------
+const STORAGE_KEY = "crm_portabilidad_v2";
 
-let clientes = JSON.parse(localStorage.getItem(STORAGE)) || [];
+// Arreglo principal
+let clientes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-// ==========================
-// GUARDAR
-// ==========================
+// ==========================================
+// GUARDAR EN LOCALSTORAGE
+// ==========================================
 
-function guardarDatos() {
+function guardarDatos(){
 
     localStorage.setItem(
-        STORAGE,
+
+        STORAGE_KEY,
+
         JSON.stringify(clientes)
+
     );
 
 }
 
-// ==========================
-// ACTUALIZAR TODO
-// ==========================
+// ==========================================
+// OBTENER CLIENTES
+// ==========================================
 
-function actualizarTodo() {
+function obtenerClientes(){
+
+    return clientes;
+
+}
+
+// ==========================================
+// AGREGAR CLIENTE
+// ==========================================
+
+function agregarCliente(cliente){
+
+    // Evitar números repetidos
+
+    let existe = clientes.find(
+
+        c => c.numero === cliente.numero
+
+    );
+
+    if(existe){
+
+        alert("Ese número ya existe.");
+
+        return false;
+
+    }
+
+    clientes.push(cliente);
 
     guardarDatos();
 
-    dibujarTabla();
+    actualizarTodo();
 
-    actualizarDashboard();
+    return true;
 
 }
 
-// ==========================
-// AGREGAR CLIENTE
-// ==========================
+// ==========================================
+// ELIMINAR CLIENTE
+// ==========================================
 
-function agregarCliente(nombre, numero) {
+function eliminarCliente(index){
 
-    numero = numero.replace(/\D/g, "");
+    if(!confirm("¿Eliminar cliente?")) return;
 
-    if (nombre == "" || numero == "") return;
+    clientes.splice(index,1);
 
-    // Evita duplicados
-
-    let existe = clientes.find(c => c.numero == numero);
-
-    if (existe) return;
-
-    clientes.push({
-
-        nombre: nombre,
-
-        numero: numero,
-
-        estado: "En proceso",
-
-        fecha: new Date().toLocaleString()
-
-    });
+    guardarDatos();
 
     actualizarTodo();
 
 }
 
-// ==========================
-// ELIMINAR
-// ==========================
-
-function eliminarCliente(index) {
-
-    if (!confirm("¿Eliminar cliente?")) return;
-
-    clientes.splice(index, 1);
-
-    actualizarTodo();
-
-}
-
-// ==========================
+// ==========================================
 // CAMBIAR ESTADO
-// ==========================
+// ==========================================
 
-function cambiarEstado(index, estado) {
+function cambiarEstado(index,nuevoEstado){
 
-    clientes[index].estado = estado;
+    clientes[index].estado = nuevoEstado;
+
+    clientes[index].ultimaGestion =
+
+        new Date().toLocaleString();
+
+    guardarDatos();
 
     actualizarTodo();
 
 }
 
-// ==========================
-// BUSCAR
-// ==========================
+// ==========================================
+// EDITAR CLIENTE
+// ==========================================
 
-function obtenerClientes() {
+function editarCliente(index,nuevoCliente){
 
-    let texto = document
-        .getElementById("buscar")
-        .value
-        .toLowerCase();
+    clientes[index] = nuevoCliente;
 
-    if (texto == "") return clientes;
+    guardarDatos();
 
-    return clientes.filter(cliente => {
+    actualizarTodo();
 
-        return (
+}
+
+// ==========================================
+// BUSCAR CLIENTES
+// ==========================================
+
+function buscarClientes(texto){
+
+    texto = texto.toLowerCase();
+
+    return clientes.filter(cliente=>{
+
+        return(
 
             cliente.nombre
-                .toLowerCase()
-                .includes(texto)
+
+            .toLowerCase()
+
+            .includes(texto)
 
             ||
 
             cliente.numero
-                .includes(texto)
+
+            .includes(texto)
+
+            ||
+
+            cliente.cedula
+
+            .includes(texto)
 
         );
 
     });
+
+}
+
+// ==========================================
+// REINICIAR CRM
+// ==========================================
+
+function borrarCRM(){
+
+    if(
+
+        confirm(
+
+        "¿Eliminar TODOS los clientes?"
+
+        )
+
+    ){
+
+        clientes=[];
+
+        guardarDatos();
+
+        actualizarTodo();
+
+    }
+
+}
+
+// ==========================================
+// EXPORTAR JSON
+// ==========================================
+
+function exportarJSON(){
+
+    const datos = JSON.stringify(
+
+        clientes,
+
+        null,
+
+        2
+
+    );
+
+    const blob = new Blob(
+
+        [datos],
+
+        {
+
+            type:"application/json"
+
+        }
+
+    );
+
+    const enlace = document.createElement("a");
+
+    enlace.href =
+
+    URL.createObjectURL(blob);
+
+    enlace.download =
+
+    "clientes.json";
+
+    enlace.click();
+
+}
+
+// ==========================================
+// IMPORTAR JSON
+// ==========================================
+
+function importarJSON(event){
+
+    const archivo = event.target.files[0];
+
+    if(!archivo) return;
+
+    const lector = new FileReader();
+
+    lector.onload=function(e){
+
+        clientes = JSON.parse(
+
+            e.target.result
+
+        );
+
+        guardarDatos();
+
+        actualizarTodo();
+
+    }
+
+    lector.readAsText(archivo);
 
 }
