@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Portabilidad PRO</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>CRM PORTABILIDAD PRO</h1>
+</header>
+
+<div class="contenedor">
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>Total</h3>
+            <h2 id="totalClientes">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>En proceso</h3>
+            <h2 id="enProceso">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Con consumo</h3>
+            <h2 id="conConsumo">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Terminadas</h3>
+            <h2 id="terminadas">0</h2>
+        </div>
+
+        <div class="card">
+            <h3>Canceladas</h3>
+            <h2 id="canceladas">0</h2>
+        </div>
+
+    </section>
+
+
+    <!-- IMPORTAR CLIENTES -->
+
+    <section class="importar">
+
+        <h2>Pegar clientes desde Google Sheets o Excel</h2>
+
+        <p>
+            Copia dos columnas (Nombre y Número) y pégalas aquí.
+        </p>
+
+        <textarea
+            id="textoImportar"
+            rows="12"
+            placeholder="Juan Pérez    3001234567
+
+María López    3009876543
+
+Carlos Díaz    3005556677">
+        </textarea>
+
+        <button id="btnImportar">
+
+            📥 Importar Clientes
+
+        </button>
+
+    </section>
+
+
+
+    <!-- BUSCADOR -->
+
+    <section>
+
+        <input
+            type="text"
+            id="buscar"
+            placeholder="Buscar cliente..."
+        >
+
+    </section>
+
+
+
+    <!-- TABLA -->
+
+    <section>
+
+        <table id="tablaClientes">
+
+            <thead>
+
+                <tr>
+
+                    <th>Nombre</th>
+
+                    <th>WhatsApp</th>
+
+                    <th>Estado</th>
+
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="listaClientes">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+</div>
+
+
+<script src="storage.js"></script>
+
+<script src="dashboard.js"></script>
+
+<script src="importar.js"></script>
+
+<script src="tabla.js"></script>
+
+<script src="whatsapp.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
