@@ -1,9 +1,8 @@
-// ==========================================
+// =========================================
 // TABLA.JS
 // CRM PORTABILIDAD PRO
-// ==========================================
+// =========================================
 
-// Estados disponibles
 const ESTADOS = [
     "En proceso",
     "Consumida",
@@ -11,46 +10,61 @@ const ESTADOS = [
     "Cancelada"
 ];
 
-// ===============================
+// ==============================
 // DIBUJAR TABLA
-// ===============================
+// ==============================
 
-function dibujarTabla(){
+function dibujarTabla() {
 
     const lista = document.getElementById("listaClientes");
-
     lista.innerHTML = "";
 
     const datos = obtenerClientes();
 
-    datos.forEach((cliente,index)=>{
+    datos.forEach((cliente, index) => {
 
-        const fila = document.createElement("tr");
+        let fila = document.createElement("tr");
+
+        switch (cliente.estado) {
+
+            case "En proceso":
+                fila.style.background = "#facc15";
+                fila.style.color = "#000";
+                break;
+
+            case "Consumida":
+                fila.style.background = "#22c55e";
+                break;
+
+            case "Terminada":
+                fila.style.background = "#3b82f6";
+                break;
+
+            case "Cancelada":
+                fila.style.background = "#ef4444";
+                break;
+
+        }
 
         fila.innerHTML = `
 
         <td>
 
-            <strong>
+            <a href="#"
 
-                <a href="#"
-                onclick="verCliente(${index});return false;">
+            onclick="verCliente(${index});return false;">
 
-                ${cliente.nombre}
+            ${cliente.nombre}
 
-                </a>
-
-            </strong>
+            </a>
 
         </td>
 
         <td>
 
-            <a
+            <a href="#"
 
-            href="https://wa.me/57${cliente.numero}"
-
-            target="_blank">
+            onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
 
             ${cliente.numero}
 
@@ -60,23 +74,21 @@ function dibujarTabla(){
 
         <td>
 
-            <select
+            <select onchange="cambiarEstado(${index},this.value)">
 
-            onchange="cambiarEstado(${index},this.value)">
-
-            ${ESTADOS.map(e=>`
+                ${ESTADOS.map(estado => `
 
                 <option
 
-                value="${e}"
+                value="${estado}"
 
-                ${cliente.estado===e?"selected":""}>
+                ${cliente.estado === estado ? "selected" : ""}>
 
-                ${e}
+                ${estado}
 
                 </option>
 
-            `).join("")}
+                `).join("")}
 
             </select>
 
@@ -84,46 +96,11 @@ function dibujarTabla(){
 
         <td>
 
-            <button onclick="eliminarCliente(${index})">
-
-            🗑
-
-            </button>
+            ${botonesAcciones(cliente,index)}
 
         </td>
 
         `;
-
-        // Colores por estado
-
-        switch(cliente.estado){
-
-            case "En proceso":
-
-                fila.style.background="#facc15";
-                fila.style.color="#000";
-
-            break;
-
-            case "Consumida":
-
-                fila.style.background="#22c55e";
-
-            break;
-
-            case "Terminada":
-
-                fila.style.background="#3b82f6";
-
-            break;
-
-            case "Cancelada":
-
-                fila.style.background="#ef4444";
-
-            break;
-
-        }
 
         lista.appendChild(fila);
 
@@ -131,44 +108,82 @@ function dibujarTabla(){
 
 }
 
-// ===============================
-// VER CLIENTE
-// ===============================
-
-function verCliente(index){
-
-    const cliente = clientes[index];
-
-    alert(
-
-`CLIENTE
-
-Nombre:
-${cliente.nombre}
-
-Número:
-${cliente.numero}
-
-Estado:
-${cliente.estado}
-
-Fecha registro:
-${cliente.fecha}`
-
-    );
-
-}
-
-// ===============================
+// ==============================
 // BUSCADOR
-// ===============================
+// ==============================
 
 document
 .getElementById("buscar")
-.addEventListener(
+.addEventListener("keyup", dibujarTabla);
 
-"input",
+// ==============================
+// FILTRAR POR ESTADO
+// ==============================
 
-dibujarTabla
+function filtrarEstado(estado){
 
-);
+    const lista = document.getElementById("listaClientes");
+
+    lista.innerHTML = "";
+
+    clientes.forEach((cliente,index)=>{
+
+        if(cliente.estado!==estado) return;
+
+        let fila = document.createElement("tr");
+
+        fila.innerHTML = `
+
+        <td>
+
+        <a href="#"
+
+        onclick="verCliente(${index});return false;">
+
+        ${cliente.nombre}
+
+        </a>
+
+        </td>
+
+        <td>
+
+        <a href="#"
+
+        onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
+
+        ${cliente.numero}
+
+        </a>
+
+        </td>
+
+        <td>
+
+        ${cliente.estado}
+
+        </td>
+
+        <td>
+
+        ${botonesAcciones(cliente,index)}
+
+        </td>
+
+        `;
+
+        lista.appendChild(fila);
+
+    });
+
+}
+
+// ==============================
+// ACTUALIZAR TABLA
+// ==============================
+
+function refrescarTabla(){
+
+    dibujarTabla();
+
+}
