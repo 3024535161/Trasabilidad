@@ -1,132 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Portabilidad PRO</title>
 
-    <link rel="stylesheet" href="style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CRM Portabilidad PRO</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <header>
-    <h1>CRM PORTABILIDAD PRO</h1>
+
+<h1>CRM PORTABILIDAD PRO</h1>
+
 </header>
 
 <div class="contenedor">
 
-    <!-- DASHBOARD -->
-
+<!-- DASHBOARD -->
 
 <section class="dashboard">
 
-    <div class="card">
-        <h3>Total</h3>
-        <h2 id="totalClientes">0</h2>
-    </div>
+<div class="card">
+<h3>Total</h3>
+<h2 id="totalClientes">0</h2>
+</div>
 
-    <div class="card">
-        <h3>En proceso</h3>
-        <h2 id="enProceso">0</h2>
-    </div>
+<div class="card">
+<h3>En proceso</h3>
+<h2 id="proceso">0</h2>
+</div>
 
-    <div class="card">
-        <h3>Consumidas</h3>
-        <h2 id="consumidas">0</h2>
-    </div>
+<div class="card">
+<h3>Consumidas</h3>
+<h2 id="consumidas">0</h2>
+</div>
 
-    <div class="card">
-        <h3>Terminadas</h3>
-        <h2 id="terminadas">0</h2>
-    </div>
+<div class="card">
+<h3>Terminadas</h3>
+<h2 id="terminadas">0</h2>
+</div>
 
-    <div class="card">
-        <h3>Canceladas</h3>
-        <h2 id="canceladas">0</h2>
-    </div>
+<div class="card">
+<h3>Canceladas</h3>
+<h2 id="canceladas">0</h2>
+</div>
 
 </section>
 
-   
-
-<!-- IMPORTAR CLIENTES -->
+<!-- IMPORTAR -->
 
 <section class="importar">
 
-    <h2>Pegar clientes desde Google Sheets o Excel</h2>
+<h2>Importación rápida</h2>
 
-    <p>
-        Copia las columnas Nombre y Número y pégalas aquí.
-    </p>
+<p>
 
-    <textarea
-        id="textoImportar"
-        rows="12"
-        placeholder="Juan Pérez    3001234567
+Copia desde Google Sheets o Excel dos columnas:
 
-María López    3009876543
+<b>Nombre</b> y <b>Número</b>.
 
-Carlos Díaz    3005556677">
-    </textarea>
+</p>
 
-    <button id="btnImportar">
+<textarea
 
-        📥 Importar Clientes
+id="textoImportar"
 
-    </button>
+placeholder="Juan Pérez    3001234567
+
+María López    3009876543">
+
+</textarea>
+
+<br><br>
+
+<button id="btnImportar">
+
+📥 Importar Clientes
+
+</button>
 
 </section>
 
+<!-- BUSCADOR -->
 
+<section>
 
-    <!-- BUSCADOR -->
+<input
 
-    <section>
+type="text"
 
-        <input
-            type="text"
-            id="buscar"
-            placeholder="Buscar cliente..."
-        >
+id="buscar"
 
-    </section>
+placeholder="Buscar cliente..."
 
+>
 
+</section>
 
-    <!-- TABLA -->
+<!-- TABLA -->
 
-    <section>
+<section>
 
-        <table id="tablaClientes">
+<table id="tablaClientes">
 
-            <thead>
+<thead>
 
-                <tr>
+<tr>
 
-                    <th>Nombre</th>
+<th>Nombre</th>
 
-                    <th>WhatsApp</th>
+<th>WhatsApp</th>
 
-                    <th>Estado</th>
+<th>Estado</th>
 
-                    <th>Acciones</th>
+<th>Acciones</th>
 
-                </tr>
+</tr>
 
-            </thead>
+</thead>
 
-            <tbody id="listaClientes">
+<tbody id="listaClientes">
 
-            </tbody>
+</tbody>
 
-        </table>
+</table>
 
-    </section>
-
+</section>
 
 </div>
-
 
 <script src="storage.js"></script>
 
@@ -141,4 +149,5 @@ Carlos Díaz    3005556677">
 <script src="app.js"></script>
 
 </body>
+
 </html>
