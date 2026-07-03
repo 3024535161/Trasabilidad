@@ -6,12 +6,10 @@ function actualizarDashboard(){
 
     const clientes = obtenerClientes();
 
-    let total = clientes.length;
-
     let proceso = 0;
-    let consumo = 0;
-    let terminado = 0;
-    let cancelada = 0;
+    let consumidas = 0;
+    let terminadas = 0;
+    let canceladas = 0;
 
     clientes.forEach(cliente=>{
 
@@ -19,21 +17,35 @@ function actualizarDashboard(){
 
             case "En proceso":
                 proceso++;
-            break;
+                break;
 
-            case "Con consumo":
-                consumo++;
-            break;
+            case "Consumida":
+                consumidas++;
+                break;
 
-            case "Terminado":
-                terminado++;
-            break;
+            case "Terminada":
+                terminadas++;
+                break;
 
             case "Cancelada":
-                cancelada++;
-            break;
+                canceladas++;
+                break;
 
         }
+
+    });
+
+    document.getElementById("totalClientes").textContent = clientes.length;
+
+    document.getElementById("enProceso").textContent = proceso;
+
+    document.getElementById("consumidas").textContent = consumidas;
+
+    document.getElementById("terminadas").textContent = terminadas;
+
+    document.getElementById("canceladas").textContent = canceladas;
+
+}
 
     });
 
