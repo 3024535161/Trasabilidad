@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CRM Portabilidad PRO</title>
+<title>CRM Portabilidad PRO V2</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -17,54 +17,115 @@
 
 <header>
 
-<h1>CRM PORTABILIDAD PRO</h1>
+<h1>CRM PORTABILIDAD PRO V2</h1>
+
+<p>Seguimiento de Portabilidades</p>
 
 </header>
 
 <div class="contenedor">
 
+<!-- ========================= -->
 <!-- DASHBOARD -->
+<!-- ========================= -->
 
 <section class="dashboard">
 
 <div class="card">
+
 <h3>Total</h3>
+
 <h2 id="totalClientes">0</h2>
+
 </div>
 
 <div class="card">
+
 <h3>En proceso</h3>
+
 <h2 id="proceso">0</h2>
+
 </div>
 
 <div class="card">
+
 <h3>Consumidas</h3>
+
 <h2 id="consumidas">0</h2>
+
 </div>
 
 <div class="card">
+
 <h3>Terminadas</h3>
+
 <h2 id="terminadas">0</h2>
+
 </div>
 
 <div class="card">
+
 <h3>Canceladas</h3>
+
 <h2 id="canceladas">0</h2>
+
 </div>
 
 </section>
 
+<!-- ========================= -->
+<!-- REGISTRO MANUAL -->
+<!-- ========================= -->
+
+<section class="registro">
+
+<h2>Registrar Cliente</h2>
+
+<div class="formulario">
+
+<input id="nombre" placeholder="Nombre">
+
+<input id="cedula" placeholder="Cédula">
+
+<input id="exp" type="date">
+
+<input id="numero" placeholder="WhatsApp">
+
+<input id="nip" placeholder="NIP">
+
+<input id="ciudad" placeholder="Ciudad">
+
+<input id="departamento" placeholder="Departamento">
+
+<input id="entrega" type="date">
+
+</div>
+
+<br>
+
+<button id="btnGuardar">
+
+💾 Guardar Cliente
+
+</button>
+
+</section>
+
+<!-- ========================= -->
 <!-- IMPORTAR -->
+<!-- ========================= -->
 
 <section class="importar">
 
-<h2>Importación rápida</h2>
+<h2>Importar Base</h2>
 
 <p>
 
-Copia desde Google Sheets o Excel dos columnas:
+Copia desde Google Sheets o Excel
 
-<b>Nombre</b> y <b>Número</b>.
+las columnas
+
+Nombre | WhatsApp
 
 </p>
 
@@ -72,9 +133,9 @@ Copia desde Google Sheets o Excel dos columnas:
 
 id="textoImportar"
 
-placeholder="Juan Pérez    3001234567
+placeholder="Juan Pérez     3001234567
 
-María López    3009876543">
+María López     3004567890">
 
 </textarea>
 
@@ -88,33 +149,35 @@ María López    3009876543">
 
 </section>
 
-<!-- BUSCADOR -->
+<!-- ========================= -->
+<!-- BUSCAR -->
+<!-- ========================= -->
 
 <section>
 
 <input
 
-type="text"
-
 id="buscar"
 
-placeholder="Buscar cliente..."
-
->
+placeholder="Buscar cliente...">
 
 </section>
 
+<!-- ========================= -->
 <!-- TABLA -->
+<!-- ========================= -->
 
 <section>
 
-<table id="tablaClientes">
+<table>
 
 <thead>
 
 <tr>
 
 <th>Nombre</th>
+
+<th>Cédula</th>
 
 <th>WhatsApp</th>
 
@@ -133,6 +196,30 @@ placeholder="Buscar cliente..."
 </table>
 
 </section>
+
+</div>
+
+<!-- ========================= -->
+<!-- PANEL LATERAL -->
+<!-- ========================= -->
+
+<div id="panelCliente">
+
+<div class="panelHeader">
+
+<h2>Cliente</h2>
+
+<button id="cerrarPanel">
+
+✖
+
+</button>
+
+</div>
+
+<div id="detalleCliente">
+
+</div>
 
 </div>
 
