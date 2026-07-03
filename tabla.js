@@ -82,26 +82,33 @@ function dibujarTabla(){
 
         <td>
 
-            <select
-                onchange="cambiarEstado(${index},this.value)"
-            >
+            <td>
 
-                ${ESTADOS.map(estado=>`
+<select onchange="cambiarEstado(${index},this.value)">
 
-                    <option
-                        value="${estado}"
-                        ${estado===cliente.estado?"selected":""}
-                    >
+<option value="En proceso"
+${cliente.estado=="En proceso"?"selected":""}>
+🟡 En proceso
+</option>
 
-                        ${estado}
+<option value="Consumida"
+${cliente.estado=="Consumida"?"selected":""}>
+🟢 Consumida
+</option>
 
-                    </option>
+<option value="Terminada"
+${cliente.estado=="Terminada"?"selected":""}>
+🔵 Terminada
+</option>
 
-                `).join("")}
+<option value="Cancelada"
+${cliente.estado=="Cancelada"?"selected":""}>
+🔴 Cancelada
+</option>
 
-            </select>
+</select>
 
-        </td>
+</td>
 
         <td>
 
