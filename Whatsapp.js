@@ -1,52 +1,30 @@
-// =====================================
-// WHATSAPP.JS
-// =====================================
+// ==========================================
+// CRM PORTABILIDAD PRO V2
+// whatsapp.js
+// ==========================================
 
-// Mensaje predeterminado
-
-const MENSAJE_BASE =
-`Hola, soy tu asesor de Movistar.
-
-Te escribo para realizar seguimiento a tu proceso de portabilidad.
-
-Quedo atento a cualquier duda.
-
-¡Muchas gracias!`;
-
-// =====================================
-// ABRIR WHATSAPP
-// =====================================
-
-function abrirWhatsApp(numero, nombre){
+// Abrir WhatsApp
+function abrirWhatsApp(numero,nombre){
 
     numero = numero.replace(/\D/g,"");
 
-    if(numero.length < 10){
-
-        alert("Número inválido");
-
-        return;
-
-    }
-
     let mensaje =
+`Hola ${nombre},
 
-`Hola ${nombre}.
+Te contacto para realizar seguimiento a tu proceso de portabilidad.
 
-${MENSAJE_BASE}`;
+Quedo atento a cualquier duda.
+
+Muchas gracias.`;
 
     let url =
-
 `https://wa.me/57${numero}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url,"_blank");
 
 }
 
-// =====================================
-// COPIAR NÚMERO
-// =====================================
-
+// Copiar número
 function copiarNumero(numero){
 
     navigator.clipboard.writeText(numero);
@@ -55,56 +33,85 @@ function copiarNumero(numero){
 
 }
 
-// =====================================
-// LLAMAR
-// =====================================
-
+// Llamar
 function llamar(numero){
 
     window.location.href="tel:+57"+numero;
 
 }
 
-// =====================================
-// BOTONES DE ACCIONES
-// =====================================
+// Compartir cliente
+function compartirCliente(cliente){
 
+    let texto=
+
+`Cliente: ${cliente.nombre}
+Cédula: ${cliente.cedula}
+WhatsApp: ${cliente.numero}
+Estado: ${cliente.estado}`;
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:"Cliente",
+
+            text:texto
+
+        });
+
+    }else{
+
+        navigator.clipboard.writeText(texto);
+
+        alert("Información copiada.");
+
+    }
+
+}
+
+// Generar botones
 function botonesAcciones(cliente,index){
 
 return `
 
 <button
-onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}')">
+onclick="abrirFicha(${index})"
+title="Ver">
 
-💬 WhatsApp
-
-</button>
-
-<button
-onclick="llamar('${cliente.numero}')">
-
-📞 Llamar
+👁
 
 </button>
 
 <button
-onclick="copiarNumero('${cliente.numero}')">
+onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}')"
+title="WhatsApp">
 
-📋 Copiar
-
-</button>
-
-<button
-onclick="verHistorial(${index})">
-
-📄 Historial
+💬
 
 </button>
 
 <button
-onclick="eliminarCliente(${index})">
+onclick="copiarNumero('${cliente.numero}')"
+title="Copiar">
 
-🗑 Eliminar
+📋
+
+</button>
+
+<button
+onclick="llamar('${cliente.numero}')"
+title="Llamar">
+
+📞
+
+</button>
+
+<button
+onclick="eliminarCliente(${index})"
+title="Eliminar">
+
+🗑
 
 </button>
 
