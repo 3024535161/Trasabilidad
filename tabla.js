@@ -3,10 +3,15 @@
 // ======================================
 
 const ESTADOS = [
+
     "En proceso",
-    "Con consumo",
-    "Terminado",
+
+    "Consumida",
+
+    "Terminada",
+
     "Cancelada"
+
 ];
 
 // ======================================
