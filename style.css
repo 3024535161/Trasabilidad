@@ -1,4 +1,7 @@
-/* ===== RESET ===== */
+/* ===========================
+   CRM PORTABILIDAD PRO
+   STYLE.CSS
+=========================== */
 
 *{
     margin:0;
@@ -7,316 +10,201 @@
     font-family:Arial,Helvetica,sans-serif;
 }
 
-/* ===== BODY ===== */
-
 body{
     background:#0f172a;
-    color:white;
+    color:#fff;
 }
-
-/* ===== HEADER ===== */
 
 header{
-    background:#00A9E0;
+    background:#00a9e0;
     padding:20px;
     text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    box-shadow:0 3px 10px rgba(0,0,0,.3);
+    box-shadow:0 2px 10px rgba(0,0,0,.3);
 }
 
-/* ===== CONTENEDOR ===== */
+header h1{
+    font-size:28px;
+}
 
 .contenedor{
     width:95%;
     max-width:1400px;
-    margin:auto;
-    padding:20px;
+    margin:20px auto;
 }
 
-/* ===== DASHBOARD ===== */
+/* ===========================
+   DASHBOARD
+=========================== */
 
 .dashboard{
-
     display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
     gap:15px;
-
-    margin-bottom:25px;
-
+    margin-bottom:20px;
 }
 
 .card{
-
     background:#1e293b;
-
     border-radius:12px;
-
     padding:20px;
-
     text-align:center;
-
     transition:.3s;
-
     cursor:pointer;
-
 }
 
 .card:hover{
-
     transform:translateY(-5px);
-
-    background:#27364f;
-
+    background:#334155;
 }
 
 .card h3{
-
-    color:#8ecdf0;
-
+    color:#cbd5e1;
     margin-bottom:10px;
-
 }
 
 .card h2{
-
-    font-size:38px;
-
+    font-size:35px;
     color:#00e5ff;
-
 }
 
-/* ===== BLOQUES ===== */
+/* ===========================
+   SECCIONES
+=========================== */
 
 .importar,
 section{
-
     background:#1e293b;
-
-    border-radius:12px;
-
     padding:20px;
-
-    margin-bottom:25px;
-
+    border-radius:12px;
+    margin-bottom:20px;
 }
 
-/* ===== TEXTAREA ===== */
+/* ===========================
+   TEXTAREA
+=========================== */
 
 textarea{
-
     width:100%;
-
-    margin-top:15px;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:10px;
-
-    resize:vertical;
-
-    background:#0f172a;
-
-    color:white;
-
     min-height:220px;
-
+    margin-top:15px;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#0f172a;
+    color:white;
+    resize:vertical;
     font-size:15px;
-
 }
 
-/* ===== INPUT ===== */
+/* ===========================
+   INPUT
+=========================== */
 
 input{
-
     width:100%;
-
-    padding:14px;
-
+    padding:12px;
     border:none;
-
-    border-radius:10px;
-
+    border-radius:8px;
     background:#0f172a;
-
     color:white;
-
-    margin-top:10px;
-
-    margin-bottom:10px;
-
 }
 
-/* ===== BOTONES ===== */
+/* ===========================
+   BOTONES
+=========================== */
 
 button{
-
-    background:#00A9E0;
-
+    background:#00a9e0;
     color:white;
-
     border:none;
-
-    border-radius:10px;
-
-    padding:14px 20px;
-
+    border-radius:8px;
+    padding:12px 18px;
     cursor:pointer;
-
-    font-size:15px;
-
     transition:.3s;
-
+    font-size:15px;
 }
 
 button:hover{
-
     background:#0284c7;
-
 }
 
-/* ===== TABLA ===== */
+/* ===========================
+   TABLA
+=========================== */
 
 table{
-
     width:100%;
-
     border-collapse:collapse;
-
-    margin-top:10px;
-
 }
 
 thead{
-
     background:#0f172a;
-
 }
 
 th{
-
     padding:15px;
-
     border:1px solid #334155;
-
 }
 
 td{
-
     padding:12px;
-
     border:1px solid #334155;
-
     text-align:center;
-
 }
 
-/* ===== LINKS ===== */
+tbody tr:hover{
+    background:#334155;
+}
+
+/* ===========================
+   SELECT ESTADO
+=========================== */
+
+select{
+    width:100%;
+    padding:8px;
+    border-radius:8px;
+    border:none;
+    background:#0f172a;
+    color:white;
+}
+
+/* ===========================
+   LINKS
+=========================== */
 
 a{
-
     color:#38bdf8;
-
     text-decoration:none;
-
     font-weight:bold;
-
 }
 
 a:hover{
-
     color:#67e8f9;
-
 }
 
-/* ===== ESTADOS ===== */
+/* ===========================
+   RESPONSIVE
+=========================== */
 
-.estado{
-
-    padding:8px 12px;
-
-    border-radius:8px;
-
-    border:none;
-
-    color:white;
-
-    font-weight:bold;
-
-}
-
-.proceso{
-
-    background:#f59e0b;
-
-}
-
-.consumo{
-
-    background:#16a34a;
-
-}
-
-.terminado{
-
-    background:#2563eb;
-
-}
-
-.cancelado{
-
-    background:#dc2626;
-
-}
-
-/* ===== RESPONSIVE ===== */
-
-@media(max-width:900px){
+@media(max-width:768px){
 
 .dashboard{
-
-grid-template-columns:1fr 1fr;
-
+grid-template-columns:1fr;
 }
 
 table{
+display:block;
+overflow-x:auto;
+}
 
-font-size:13px;
-
+header h1{
+font-size:22px;
 }
 
 button{
-
-padding:10px;
-
-}
-
-}
-
-@media(max-width:600px){
-
-.dashboard{
-
-grid-template-columns:1fr;
-
-}
-
-header{
-
-font-size:22px;
-
-}
-
-table{
-
-display:block;
-
-overflow-x:auto;
-
+width:100%;
+margin-top:10px;
 }
 
 }
