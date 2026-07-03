@@ -1,11 +1,12 @@
-// ==========================================
-// DASHBOARD.JS
-// CRM PORTABILIDAD PRO
-// ==========================================
+// ==============================================
+// CRM PORTABILIDAD PRO V2
+// dashboard.js
+// ==============================================
 
 function actualizarDashboard(){
 
     let total = clientes.length;
+
     let proceso = 0;
     let consumidas = 0;
     let terminadas = 0;
@@ -36,70 +37,78 @@ function actualizarDashboard(){
     });
 
     document.getElementById("totalClientes").innerText = total;
+
     document.getElementById("proceso").innerText = proceso;
+
     document.getElementById("consumidas").innerText = consumidas;
+
     document.getElementById("terminadas").innerText = terminadas;
+
     document.getElementById("canceladas").innerText = canceladas;
 
 }
 
-// ==============================
+// ==============================================
 // FILTROS DEL DASHBOARD
-// ==============================
+// ==============================================
 
-document.getElementById("totalClientes").parentElement.onclick = ()=>{
+document.querySelector(".dashboard").addEventListener("click",function(e){
 
-    dibujarTabla();
+    let card = e.target.closest(".card");
 
-}
+    if(!card) return;
 
-document.getElementById("proceso").parentElement.onclick = ()=>{
+    let titulo = card.querySelector("h3").innerText;
 
-    filtrarEstado("En proceso");
+    switch(titulo){
 
-}
+        case "Total":
+            dibujarTabla();
+            break;
 
-document.getElementById("consumidas").parentElement.onclick = ()=>{
+        case "En proceso":
+            mostrarEstado("En proceso");
+            break;
 
-    filtrarEstado("Consumida");
+        case "Consumidas":
+            mostrarEstado("Consumida");
+            break;
 
-}
+        case "Terminadas":
+            mostrarEstado("Terminada");
+            break;
 
-document.getElementById("terminadas").parentElement.onclick = ()=>{
+        case "Canceladas":
+            mostrarEstado("Cancelada");
+            break;
 
-    filtrarEstado("Terminada");
+    }
 
-}
+});
 
-document.getElementById("canceladas").parentElement.onclick = ()=>{
+// ==============================================
+// MOSTRAR SOLO UN ESTADO
+// ==============================================
 
-    filtrarEstado("Cancelada");
-
-};
-
-// ==============================
-// FILTRAR TABLA
-// ==============================
-
-function filtrarEstado(estado){
+function mostrarEstado(estado){
 
     const lista = document.getElementById("listaClientes");
 
-    lista.innerHTML = "";
+    lista.innerHTML="";
 
     clientes.forEach((cliente,index)=>{
 
-        if(cliente.estado !== estado) return;
+        if(cliente.estado!==estado) return;
 
         let fila = document.createElement("tr");
 
-        fila.innerHTML = `
+        fila.innerHTML=`
 
         <td>
 
         <a href="#"
 
-        onclick="verCliente(${index});return false;">
+        onclick="abrirFicha(${index});return false;">
 
         ${cliente.nombre}
 
@@ -107,13 +116,13 @@ function filtrarEstado(estado){
 
         </td>
 
+        <td>${cliente.cedula}</td>
+
         <td>
 
-        <a
+        <a href="#"
 
-        target="_blank"
-
-        href="https://wa.me/57${cliente.numero}">
+        onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
 
         ${cliente.numero}
 
@@ -124,6 +133,18 @@ function filtrarEstado(estado){
         <td>${cliente.estado}</td>
 
         <td>
+
+        <button onclick="abrirFicha(${index})">
+
+        👁
+
+        </button>
+
+        <button onclick="editarFormulario(${index})">
+
+        ✏
+
+        </button>
 
         <button onclick="eliminarCliente(${index})">
 
