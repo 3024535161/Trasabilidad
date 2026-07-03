@@ -1,62 +1,57 @@
-// =====================================
+// =======================================
 // IMPORTAR.JS
-// Importación masiva desde Excel/Sheets
-// =====================================
+// CRM PORTABILIDAD PRO
+// =======================================
 
 const btnImportar = document.getElementById("btnImportar");
-const textarea = document.getElementById("textoImportar");
+const txtImportar = document.getElementById("textoImportar");
+
+// ==============================
+// IMPORTAR CLIENTES
+// ==============================
 
 btnImportar.addEventListener("click", importarClientes);
 
-// ===============================
-// IMPORTAR CLIENTES
-// ===============================
-
 function importarClientes(){
 
-    const texto = textarea.value.trim();
+    let texto = txtImportar.value.trim();
 
-    if(texto===""){
+    if(texto==""){
 
-        alert("Pega primero la información.");
+        alert("Primero pega la información.");
 
         return;
 
     }
 
-    const lineas = texto.split("\n");
-
-    let clientes = obtenerClientes();
+    let lineas = texto.split("\n");
 
     let agregados = 0;
-
-    let repetidos = 0;
 
     lineas.forEach(linea=>{
 
         linea = linea.trim();
 
-        if(linea==="") return;
+        if(linea=="") return;
 
-        // Detecta tabulación o varios espacios
+        // Divide por tabulación (Google Sheets)
+        let datos = linea.split("\t");
 
-        let partes = linea.split(/\t+/);
+        // Si no hay tabulación intenta con varios espacios
+        if(datos.length<2){
 
-        if(partes.length<2){
-
-            partes = linea.split(/\s{2,}/);
+            datos = linea.split(/\s{2,}/);
 
         }
 
-        // Si todavía no detecta intenta buscar el último número
+        // Último intento: nombre + último número
+        if(datos.length<2){
 
-        if(partes.length<2){
-
-            const numero = linea.match(/\d{7,15}$/);
+            let numero = linea.match(/\d{7,15}$/);
 
             if(numero){
 
-                partes = [
+                datos = [
 
                     linea.replace(numero[0],"").trim(),
 
@@ -68,94 +63,34 @@ function importarClientes(){
 
         }
 
-        if(partes.length<2) return;
+        if(datos.length<2) return;
 
-        const nombre = partes[0].trim();
+        let nombre = datos[0].trim();
 
-        const numero = partes[1].replace(/\D/g,"");
+        let numero = datos[1].trim();
 
-        if(nombre==="" || numero==="") return;
-
-        // Evitar duplicados
-
-        const existe = clientes.some(
-
-            c=>c.numero===numero
-
-        );
-
-        if(existe){
-
-            repetidos++;
-
-            return;
-
-        }
-
-        clientes.push({
-
-            nombre:nombre,
-
-            numero:numero,
-
-            estado:"En proceso",
-
-            fechaRegistro:new Date().toLocaleDateString(),
-
-            ultimaActualizacion:"",
-
-            historial:[
-
-                "Cliente importado"
-
-            ]
-
-        });
+        agregarCliente(nombre,numero);
 
         agregados++;
 
     });
 
-    guardarClientes(clientes);
-
-    textarea.value="";
-
-    actualizarCRM();
+    txtImportar.value="";
 
     alert(
 
-        "Clientes agregados: "
-
-        +agregados+
-
-        "\\nRepetidos: "
-
-        +repetidos
+        "Clientes importados: "+agregados
 
     );
 
 }
 
-// ===============================
+// ==============================
 // PEGAR CON CTRL+V
-// ===============================
+// ==============================
 
-textarea.addEventListener(
+txtImportar.addEventListener("paste",()=>{
 
-    "paste",
+    console.log("Datos pegados correctamente.");
 
-    function(){
-
-        setTimeout(()=>{
-
-            console.log(
-
-                "Información pegada"
-
-            );
-
-        },100);
-
-    }
-
-);
+});
