@@ -1,11 +1,11 @@
-// ======================================
+// ==========================================
 // DASHBOARD.JS
-// ======================================
+// CRM PORTABILIDAD PRO
+// ==========================================
 
 function actualizarDashboard(){
 
-    const clientes = obtenerClientes();
-
+    let total = clientes.length;
     let proceso = 0;
     let consumidas = 0;
     let terminadas = 0;
@@ -35,91 +35,83 @@ function actualizarDashboard(){
 
     });
 
-    document.getElementById("totalClientes").textContent = clientes.length;
-
-    document.getElementById("enProceso").textContent = proceso;
-
-    document.getElementById("consumidas").textContent = consumidas;
-
-    document.getElementById("terminadas").textContent = terminadas;
-
-    document.getElementById("canceladas").textContent = canceladas;
+    document.getElementById("totalClientes").innerText = total;
+    document.getElementById("proceso").innerText = proceso;
+    document.getElementById("consumidas").innerText = consumidas;
+    document.getElementById("terminadas").innerText = terminadas;
+    document.getElementById("canceladas").innerText = canceladas;
 
 }
 
-    });
-
-    document.getElementById("totalClientes").textContent = total;
-
-    document.getElementById("enProceso").textContent = proceso;
-
-    document.getElementById("conConsumo").textContent = consumo;
-
-    document.getElementById("terminadas").textContent = terminado;
-
-    document.getElementById("canceladas").textContent = cancelada;
-
-}
-
-// ======================================
+// ==============================
 // FILTROS DEL DASHBOARD
-// ======================================
+// ==============================
 
-document.getElementById("totalClientes").parentElement.onclick=()=>{
+document.getElementById("totalClientes").parentElement.onclick = ()=>{
 
     dibujarTabla();
 
 }
 
-document.getElementById("enProceso").parentElement.onclick=()=>{
+document.getElementById("proceso").parentElement.onclick = ()=>{
 
     filtrarEstado("En proceso");
 
 }
 
-document.getElementById("conConsumo").parentElement.onclick=()=>{
+document.getElementById("consumidas").parentElement.onclick = ()=>{
 
-    filtrarEstado("Con consumo");
-
-}
-
-document.getElementById("terminadas").parentElement.onclick=()=>{
-
-    filtrarEstado("Terminado");
+    filtrarEstado("Consumida");
 
 }
 
-document.getElementById("canceladas").parentElement.onclick=()=>{
+document.getElementById("terminadas").parentElement.onclick = ()=>{
+
+    filtrarEstado("Terminada");
+
+}
+
+document.getElementById("canceladas").parentElement.onclick = ()=>{
 
     filtrarEstado("Cancelada");
 
-}
+};
 
-// ======================================
+// ==============================
 // FILTRAR TABLA
-// ======================================
+// ==============================
 
 function filtrarEstado(estado){
 
-    const tbody = document.getElementById("listaClientes");
+    const lista = document.getElementById("listaClientes");
 
-    tbody.innerHTML="";
-
-    const clientes = obtenerClientes();
+    lista.innerHTML = "";
 
     clientes.forEach((cliente,index)=>{
 
-        if(cliente.estado!==estado) return;
+        if(cliente.estado !== estado) return;
 
-        const fila=document.createElement("tr");
+        let fila = document.createElement("tr");
 
-        fila.innerHTML=`
-
-        <td><strong>${cliente.nombre}</strong></td>
+        fila.innerHTML = `
 
         <td>
 
-        <a target="_blank"
+        <a href="#"
+
+        onclick="verCliente(${index});return false;">
+
+        ${cliente.nombre}
+
+        </a>
+
+        </td>
+
+        <td>
+
+        <a
+
+        target="_blank"
 
         href="https://wa.me/57${cliente.numero}">
 
@@ -133,9 +125,9 @@ function filtrarEstado(estado){
 
         <td>
 
-        <button onclick="verHistorial(${index})">
+        <button onclick="eliminarCliente(${index})">
 
-        Historial
+        🗑
 
         </button>
 
@@ -143,7 +135,7 @@ function filtrarEstado(estado){
 
         `;
 
-        tbody.appendChild(fila);
+        lista.appendChild(fila);
 
     });
 
