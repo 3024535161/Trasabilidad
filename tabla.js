@@ -1,118 +1,76 @@
-// ======================================
-// TABLA.JS
-// ======================================
-
 const ESTADOS = [
-
     "En proceso",
-
     "Consumida",
-
     "Terminada",
-
     "Cancelada"
-
 ];
 
-// ======================================
-// ACTUALIZAR TODO EL CRM
-// ======================================
-
 function actualizarCRM(){
-
     dibujarTabla();
-
     actualizarDashboard();
-
 }
-
-// ======================================
-// DIBUJAR TABLA
-// ======================================
 
 function dibujarTabla(){
 
-    const tbody = document.getElementById("listaClientes");
+    const tbody=document.getElementById("listaClientes");
+    const texto=document.getElementById("buscar").value.toLowerCase();
 
-    const buscar = document
-        .getElementById("buscar")
-        .value
-        .toLowerCase();
+    tbody.innerHTML="";
 
-    tbody.innerHTML = "";
-
-    const clientes = obtenerClientes();
+    const clientes=obtenerClientes();
 
     clientes.forEach((cliente,index)=>{
 
         if(
-            !cliente.nombre.toLowerCase().includes(buscar)
-            &&
-            !cliente.numero.includes(buscar)
-        ){
-            return;
-        }
+            !cliente.nombre.toLowerCase().includes(texto) &&
+            !cliente.numero.includes(texto)
+        ) return;
 
-        const fila = document.createElement("tr");
+        let fila=document.createElement("tr");
 
-        fila.innerHTML = `
+        fila.innerHTML=`
 
         <td>
 
-            <strong>
-
-                ${cliente.nombre}
-
-            </strong>
+        <strong>${cliente.nombre}</strong>
 
         </td>
 
         <td>
 
-            <a
-                href="#"
-                onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;"
-            >
+        <a
+        href="#"
+        onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
 
-                ${cliente.numero}
+        ${cliente.numero}
 
-            </a>
+        </a>
 
         </td>
 
         <td>
 
-            <td>
+        <select onchange="cambiarEstado(${index},this.value)">
 
-<select onchange="cambiarEstado(${index},this.value)">
+        ${ESTADOS.map(estado=>`
 
-<option value="En proceso"
-${cliente.estado=="En proceso"?"selected":""}>
-🟡 En proceso
-</option>
+        <option
+        value="${estado}"
+        ${cliente.estado==estado?"selected":""}>
 
-<option value="Consumida"
-${cliente.estado=="Consumida"?"selected":""}>
-🟢 Consumida
-</option>
+        ${estado}
 
-<option value="Terminada"
-${cliente.estado=="Terminada"?"selected":""}>
-🔵 Terminada
-</option>
+        </option>
 
-<option value="Cancelada"
-${cliente.estado=="Cancelada"?"selected":""}>
-🔴 Cancelada
-</option>
+        `).join("")}
 
-</select>
+        </select>
 
-</td>
+        </td>
 
         <td>
 
-            ${botonesAcciones(cliente,index)}
+        ${botonesAcciones(cliente,index)}
 
         </td>
 
@@ -122,25 +80,25 @@ ${cliente.estado=="Cancelada"?"selected":""}>
 
             case "En proceso":
 
-                fila.style.background="#f59e0b";
+                fila.style.background="#facc15";
 
             break;
 
-            case "Con consumo":
+            case "Consumida":
 
-                fila.style.background="#16a34a";
+                fila.style.background="#22c55e";
 
             break;
 
-            case "Terminado":
+            case "Terminada":
 
-                fila.style.background="#2563eb";
+                fila.style.background="#3b82f6";
 
             break;
 
             case "Cancelada":
 
-                fila.style.background="#dc2626";
+                fila.style.background="#ef4444";
 
             break;
 
@@ -152,32 +110,13 @@ ${cliente.estado=="Cancelada"?"selected":""}>
 
 }
 
-// ======================================
-// BUSCADOR
-// ======================================
-
 document
 .getElementById("buscar")
-.addEventListener(
-    "input",
-    dibujarTabla
-);
-
-// ======================================
-// HISTORIAL
-// ======================================
+.addEventListener("input",dibujarTabla);
 
 function verHistorial(index){
 
-    const cliente = obtenerClientes()[index];
-
-    let historial = "Sin historial";
-
-    if(cliente.historial){
-
-        historial = cliente.historial.join("\n");
-
-    }
+    const cliente=obtenerClientes()[index];
 
     alert(
 
@@ -185,19 +124,13 @@ function verHistorial(index){
 
 ${cliente.nombre}
 
-Número:
-
-${cliente.numero}
-
 Estado:
 
 ${cliente.estado}
 
-------------------------
+WhatsApp:
 
-Historial
-
-${historial}`
+${cliente.numero}`
 
     );
 
