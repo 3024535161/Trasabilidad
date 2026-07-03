@@ -1,8 +1,9 @@
-// =========================================
-// TABLA.JS
-// CRM PORTABILIDAD PRO
-// =========================================
+// ===============================================
+// CRM PORTABILIDAD PRO V2
+// tabla.js
+// ===============================================
 
+// Estados disponibles
 const ESTADOS = [
     "En proceso",
     "Consumida",
@@ -10,180 +11,310 @@ const ESTADOS = [
     "Cancelada"
 ];
 
-// ==============================
+// ===============================================
 // DIBUJAR TABLA
-// ==============================
+// ===============================================
 
-function dibujarTabla() {
+function dibujarTabla(){
 
-    const lista = document.getElementById("listaClientes");
-    lista.innerHTML = "";
+    const tabla = document.getElementById("listaClientes");
 
-    const datos = obtenerClientes();
+    tabla.innerHTML = "";
 
-    datos.forEach((cliente, index) => {
+    let datos = clientes;
 
-        let fila = document.createElement("tr");
+    const texto = document
+        .getElementById("buscar")
+        .value
+        .trim()
+        .toLowerCase();
 
-        switch (cliente.estado) {
+    if(texto!=""){
+
+        datos = buscarClientes(texto);
+
+    }
+
+    datos.forEach((cliente,index)=>{
+
+        let color="";
+
+        switch(cliente.estado){
 
             case "En proceso":
-                fila.style.background = "#facc15";
-                fila.style.color = "#000";
-                break;
+                color="estado-proceso";
+            break;
 
             case "Consumida":
-                fila.style.background = "#22c55e";
-                break;
+                color="estado-consumida";
+            break;
 
             case "Terminada":
-                fila.style.background = "#3b82f6";
-                break;
+                color="estado-terminada";
+            break;
 
             case "Cancelada":
-                fila.style.background = "#ef4444";
-                break;
+                color="estado-cancelada";
+            break;
 
         }
 
-        fila.innerHTML = `
+        tabla.innerHTML += `
 
-        <td>
+<tr class="${color}">
 
-            <a href="#"
+<td>
 
-            onclick="verCliente(${index});return false;">
+<a href="#"
 
-            ${cliente.nombre}
+onclick="abrirFicha(${index});return false;">
 
-            </a>
+${cliente.nombre}
 
-        </td>
+</a>
 
-        <td>
+</td>
 
-            <a href="#"
+<td>
 
-            onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
+${cliente.cedula}
 
-            ${cliente.numero}
+</td>
 
-            </a>
+<td>
 
-        </td>
+<a
 
-        <td>
+href="#"
 
-            <select onchange="cambiarEstado(${index},this.value)">
+onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
 
-                ${ESTADOS.map(estado => `
+${cliente.numero}
 
-                <option
+</a>
 
-                value="${estado}"
+</td>
 
-                ${cliente.estado === estado ? "selected" : ""}>
+<td>
 
-                ${estado}
+<select
 
-                </option>
+onchange="cambiarEstado(${index},this.value)">
 
-                `).join("")}
+${ESTADOS.map(estado=>`
 
-            </select>
+<option
 
-        </td>
+value="${estado}"
 
-        <td>
+${cliente.estado===estado?"selected":""}>
 
-            ${botonesAcciones(cliente,index)}
+${estado}
 
-        </td>
+</option>
 
-        `;
+`).join("")}
 
-        lista.appendChild(fila);
+</select>
+
+</td>
+
+<td>
+
+<button
+
+onclick="abrirFicha(${index})">
+
+👁
+
+</button>
+
+<button
+
+onclick="editarFormulario(${index})">
+
+✏
+
+</button>
+
+<button
+
+onclick="eliminarCliente(${index})">
+
+🗑
+
+</button>
+
+</td>
+
+</tr>
+
+`;
 
     });
 
 }
 
-// ==============================
+// ===============================================
+// CARGAR CLIENTE EN EL FORMULARIO
+// ===============================================
+
+function editarFormulario(index){
+
+    let c = clientes[index];
+
+    document.getElementById("nombre").value = c.nombre;
+
+    document.getElementById("cedula").value = c.cedula;
+
+    document.getElementById("exp").value = c.exp;
+
+    document.getElementById("numero").value = c.numero;
+
+    document.getElementById("nip").value = c.nip;
+
+    document.getElementById("ciudad").value = c.ciudad;
+
+    document.getElementById("departamento").value = c.departamento;
+
+    document.getElementById("entrega").value = c.entrega;
+
+}
+
+// ===============================================
 // BUSCADOR
-// ==============================
+// ===============================================
 
 document
 .getElementById("buscar")
-.addEventListener("keyup", dibujarTabla);
+.addEventListener(
 
-// ==============================
-// FILTRAR POR ESTADO
-// ==============================
+"keyup",
 
-function filtrarEstado(estado){
-
-    const lista = document.getElementById("listaClientes");
-
-    lista.innerHTML = "";
-
-    clientes.forEach((cliente,index)=>{
-
-        if(cliente.estado!==estado) return;
-
-        let fila = document.createElement("tr");
-
-        fila.innerHTML = `
-
-        <td>
-
-        <a href="#"
-
-        onclick="verCliente(${index});return false;">
-
-        ${cliente.nombre}
-
-        </a>
-
-        </td>
-
-        <td>
-
-        <a href="#"
-
-        onclick="abrirWhatsApp('${cliente.numero}','${cliente.nombre}');return false;">
-
-        ${cliente.numero}
-
-        </a>
-
-        </td>
-
-        <td>
-
-        ${cliente.estado}
-
-        </td>
-
-        <td>
-
-        ${botonesAcciones(cliente,index)}
-
-        </td>
-
-        `;
-
-        lista.appendChild(fila);
-
-    });
-
-}
-
-// ==============================
-// ACTUALIZAR TABLA
-// ==============================
-
-function refrescarTabla(){
+function(){
 
     dibujarTabla();
 
 }
+
+);
+
+// ===============================================
+// PANEL DEL CLIENTE
+// ===============================================
+
+function abrirFicha(index){
+
+    let c = clientes[index];
+
+    document
+    .getElementById("detalleCliente")
+    .innerHTML = `
+
+<h2>${c.nombre}</h2>
+
+<hr>
+
+<p>
+
+<b>Cédula:</b>
+
+${c.cedula}
+
+</p>
+
+<p>
+
+<b>EXP:</b>
+
+${c.exp}
+
+</p>
+
+<p>
+
+<b>WhatsApp:</b>
+
+${c.numero}
+
+</p>
+
+<p>
+
+<b>NIP:</b>
+
+${c.nip}
+
+</p>
+
+<p>
+
+<b>Ciudad:</b>
+
+${c.ciudad}
+
+</p>
+
+<p>
+
+<b>Departamento:</b>
+
+${c.departamento}
+
+</p>
+
+<p>
+
+<b>Entrega:</b>
+
+${c.entrega}
+
+</p>
+
+<p>
+
+<b>Estado:</b>
+
+${c.estado}
+
+</p>
+
+<p>
+
+<b>Última gestión:</b>
+
+${c.ultimaGestion || "Sin gestión"}
+
+</p>
+
+<br>
+
+<button
+
+onclick="abrirWhatsApp('${c.numero}','${c.nombre}')">
+
+💬 WhatsApp
+
+</button>
+
+`;
+
+    document
+    .getElementById("panelCliente")
+    .style.right = "0";
+
+}
+
+// ===============================================
+// CERRAR PANEL
+// ===============================================
+
+document
+.getElementById("cerrarPanel")
+.onclick=function(){
+
+    document
+    .getElementById("panelCliente")
+    .style.right="-420px";
+
+};
