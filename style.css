@@ -1,7 +1,17 @@
 /* =====================================================
-   CRM PORTABILIDAD PRO V2
+   RAP ANIME IDEAS
    style.css
 ===================================================== */
+
+:root{
+    --fondo:#0f0f17;
+    --panel:#1a1a26;
+    --borde:#2c2c3d;
+    --texto:#ececf3;
+    --suave:#9a9ab0;
+    --acento:#ff3d8b;
+    --acento2:#7c4dff;
+}
 
 *{
     margin:0;
@@ -11,329 +21,277 @@
 }
 
 body{
-    background:#eef3f8;
-    color:#222;
+    background:var(--fondo);
+    color:var(--texto);
+    line-height:1.5;
 }
 
 /* ================= HEADER ================= */
 
 header{
-    background:#0087d1;
-    color:white;
-    padding:20px;
+    background:linear-gradient(120deg,var(--acento2),var(--acento));
+    padding:28px 16px;
     text-align:center;
-    box-shadow:0 2px 10px rgba(0,0,0,.2);
 }
 
 header h1{
-    font-size:30px;
+    font-size:32px;
+    letter-spacing:2px;
 }
 
 header p{
-    margin-top:5px;
     opacity:.9;
 }
 
-/* ================= CONTENEDOR ================= */
+/* ================= LAYOUT ================= */
 
 .contenedor{
-    width:95%;
-    max-width:1500px;
-    margin:25px auto;
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:20px 16px 60px;
 }
 
-/* ================= DASHBOARD ================= */
-
-.dashboard{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-
-    gap:15px;
-
-    margin-bottom:25px;
-
-}
-
-.card{
-
-    background:white;
-
-    border-radius:12px;
-
-    padding:20px;
-
-    text-align:center;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
-
-    transition:.25s;
-
-}
-
-.card:hover{
-
-    transform:translateY(-4px);
-
-}
-
-.card h3{
-
-    color:#555;
-
-}
-
-.card h2{
-
-    margin-top:10px;
-
-    color:#0087d1;
-
-    font-size:34px;
-
-}
-
-/* ================= SECCIONES ================= */
-
-.registro,
-.importar,
 section{
-
-    background:white;
-
+    background:var(--panel);
+    border:1px solid var(--borde);
+    border-radius:14px;
     padding:20px;
-
-    border-radius:12px;
-
-    margin-bottom:25px;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.12);
-
+    margin-top:20px;
 }
 
-/* ================= FORMULARIO ================= */
-
-.formulario{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:15px;
-
+h2{
+    font-size:20px;
+    margin-bottom:14px;
 }
+
+.seccionHeader,
+.resultadoHeader{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.seccionHeader h2,
+.resultadoHeader h2{
+    margin:0;
+}
+
+.oculto{
+    display:none;
+}
+
+/* ================= INPUTS ================= */
 
 input,
-textarea,
 select{
-
-    width:100%;
-
-    padding:12px;
-
-    border:1px solid #ccc;
-
+    background:var(--fondo);
+    color:var(--texto);
+    border:1px solid var(--borde);
     border-radius:8px;
-
+    padding:10px;
     font-size:15px;
-
+    width:100%;
 }
 
-textarea{
+#buscar{
+    max-width:260px;
+}
 
-    min-height:180px;
+.formulario{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:14px;
+}
 
-    resize:vertical;
-
+label{
+    color:var(--suave);
+    font-size:14px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
 }
 
 /* ================= BOTONES ================= */
 
+.botones{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:16px;
+}
+
+.resultadoHeader .botones{
+    margin-top:0;
+}
+
 button{
-
-    background:#0087d1;
-
-    color:white;
-
+    background:var(--borde);
+    color:var(--texto);
     border:none;
-
     border-radius:8px;
-
-    padding:12px 18px;
-
+    padding:10px 16px;
+    font-size:15px;
     cursor:pointer;
-
-    transition:.25s;
-
+    transition:transform .1s, background .2s;
 }
 
 button:hover{
-
-    background:#006cab;
-
+    background:#3a3a50;
 }
 
-/* ================= TABLA ================= */
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
+button:active{
+    transform:scale(.97);
 }
 
-th{
-
-    background:#0087d1;
-
-    color:white;
-
-    padding:14px;
-
+button.principal{
+    background:linear-gradient(120deg,var(--acento2),var(--acento));
+    font-weight:bold;
 }
 
-td{
+/* ================= GRID DE ANIMES ================= */
 
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:12px;
+}
+
+.anime{
+    background:var(--fondo);
+    border:2px solid var(--borde);
+    border-left:6px solid var(--color);
+    border-radius:10px;
     padding:12px;
-
-    border-bottom:1px solid #ddd;
-
-    text-align:center;
-
+    cursor:pointer;
+    text-align:left;
+    display:block;
+    width:100%;
 }
 
-tbody tr:hover{
-
-    background:#f5f9fc;
-
+.anime:hover{
+    background:#151520;
 }
 
-/* ================= ESTADOS ================= */
-
-.estado-proceso{
-
-    background:#ffd54f;
-
+.anime.activo{
+    border-color:var(--color);
+    box-shadow:0 0 14px var(--color);
 }
 
-.estado-consumida{
-
-    background:#81c784;
-
+.anime strong{
+    display:block;
+    font-size:15px;
 }
 
-.estado-terminada{
-
-    background:#64b5f6;
-
+.anime small{
+    color:var(--suave);
+    font-size:12px;
 }
 
-.estado-cancelada{
+/* ================= IDEA ================= */
 
-    background:#ef5350;
-
-    color:white;
-
+#idea h3{
+    font-size:24px;
+    color:var(--acento);
+    margin-bottom:4px;
 }
 
-/* ================= PANEL LATERAL ================= */
-
-#panelCliente{
-
-    position:fixed;
-
-    top:0;
-
-    right:-420px;
-
-    width:400px;
-
-    height:100%;
-
-    background:white;
-
-    box-shadow:-4px 0 12px rgba(0,0,0,.25);
-
-    transition:.35s;
-
-    z-index:999;
-
-    overflow:auto;
-
+#idea .meta{
+    color:var(--suave);
+    margin-bottom:16px;
 }
 
-.panelHeader{
+.bloque{
+    border-top:1px solid var(--borde);
+    padding:12px 0;
+}
 
-    background:#0087d1;
+.bloque h4{
+    color:var(--acento2);
+    filter:brightness(1.5);
+    margin-bottom:6px;
+    text-transform:uppercase;
+    font-size:13px;
+    letter-spacing:1px;
+}
 
-    color:white;
+.letra{
+    white-space:pre-line;
+    font-style:italic;
+    background:var(--fondo);
+    border-radius:8px;
+    padding:12px;
+}
 
-    padding:15px;
-
+.chips{
     display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
 
+.chip{
+    background:var(--fondo);
+    border:1px solid var(--borde);
+    border-radius:20px;
+    padding:3px 10px;
+    font-size:13px;
+}
+
+ol{
+    padding-left:20px;
+}
+
+/* ================= FAVORITOS ================= */
+
+#listaFavoritos{
+    list-style:none;
+}
+
+#listaFavoritos li{
+    display:flex;
     justify-content:space-between;
-
     align-items:center;
-
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid var(--borde);
 }
 
-#detalleCliente{
-
-    padding:20px;
-
+#listaFavoritos li span{
+    cursor:pointer;
 }
 
-#detalleCliente p{
-
-    margin-bottom:12px;
-
-    border-bottom:1px solid #eee;
-
-    padding-bottom:8px;
-
+#listaFavoritos li small{
+    color:var(--suave);
+    display:block;
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:768px){
-
-.dashboard{
-
-grid-template-columns:1fr 1fr;
-
+#listaFavoritos .vacio{
+    color:var(--suave);
 }
 
-.formulario{
+/* ================= AVISO ================= */
 
-grid-template-columns:1fr;
-
+#aviso{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--acento);
+    padding:10px 18px;
+    border-radius:8px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s;
 }
 
-table{
-
-display:block;
-
-overflow-x:auto;
-
+#aviso.visible{
+    opacity:1;
 }
 
-#panelCliente{
-
-width:100%;
-
-}
-
-}
-
-@media(max-width:480px){
-
-.dashboard{
-
-grid-template-columns:1fr;
-
-}
-
+@media (max-width:600px){
+    header h1{ font-size:24px; }
+    #buscar{ max-width:none; }
 }

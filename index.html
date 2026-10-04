@@ -1,240 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CRM Portabilidad PRO V2</title>
-
+<title>Rap Anime Ideas</title>
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 <body>
 
 <header>
-
-<h1>CRM PORTABILIDAD PRO V2</h1>
-
-<p>Seguimiento de Portabilidades</p>
-
+    <h1>🎤 RAP ANIME IDEAS</h1>
+    <p>Generador de ideas de raps sobre los animes en tendencia</p>
 </header>
 
-<div class="contenedor">
-
-<!-- ========================= -->
-<!-- DASHBOARD -->
-<!-- ========================= -->
-
-<section class="dashboard">
-
-<div class="card">
-
-<h3>Total</h3>
-
-<h2 id="totalClientes">0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>En proceso</h3>
-
-<h2 id="proceso">0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>Consumidas</h3>
-
-<h2 id="consumidas">0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>Terminadas</h3>
-
-<h2 id="terminadas">0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>Canceladas</h3>
-
-<h2 id="canceladas">0</h2>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- REGISTRO MANUAL -->
-<!-- ========================= -->
-
-<section class="registro">
-
-<h2>Registrar Cliente</h2>
-
-<div class="formulario">
-
-<input id="nombre" placeholder="Nombre">
-
-<input id="cedula" placeholder="Cédula">
-
-<input id="exp" type="date">
-
-<input id="numero" placeholder="WhatsApp">
-
-<input id="nip" placeholder="NIP">
-
-<input id="ciudad" placeholder="Ciudad">
-
-<input id="departamento" placeholder="Departamento">
-
-<input id="entrega" type="date">
-
-</div>
-
-<br>
-
-<button id="btnGuardar">
-
-💾 Guardar Cliente
-
-</button>
-
-</section>
-
-<!-- ========================= -->
-<!-- IMPORTAR -->
-<!-- ========================= -->
-
-<section class="importar">
-
-<h2>Importar Base</h2>
-
-<p>
-
-Copia desde Google Sheets o Excel
-
-las columnas
-
-Nombre | WhatsApp
-
-</p>
-
-<textarea
-
-id="textoImportar"
-
-placeholder="Juan Pérez     3001234567
-
-María López     3004567890">
-
-</textarea>
-
-<br><br>
-
-<button id="btnImportar">
-
-📥 Importar Clientes
-
-</button>
-
-</section>
-
-<!-- ========================= -->
-<!-- BUSCAR -->
-<!-- ========================= -->
-
-<section>
-
-<input
-
-id="buscar"
-
-placeholder="Buscar cliente...">
-
-</section>
-
-<!-- ========================= -->
-<!-- TABLA -->
-<!-- ========================= -->
-
-<section>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Nombre</th>
-
-<th>Cédula</th>
-
-<th>WhatsApp</th>
-
-<th>Estado</th>
-
-<th>Acciones</th>
-
-</tr>
-
-</thead>
-
-<tbody id="listaClientes">
-
-</tbody>
-
-</table>
-
-</section>
-
-</div>
-
-<!-- ========================= -->
-<!-- PANEL LATERAL -->
-<!-- ========================= -->
-
-<div id="panelCliente">
-
-<div class="panelHeader">
-
-<h2>Cliente</h2>
-
-<button id="cerrarPanel">
-
-✖
-
-</button>
-
-</div>
-
-<div id="detalleCliente">
-
-</div>
-
-</div>
-
-<script src="storage.js"></script>
-
-<script src="dashboard.js"></script>
-
-<script src="importar.js"></script>
-
-<script src="tabla.js"></script>
-
-<script src="whatsapp.js"></script>
-
+<main class="contenedor">
+
+    <!-- 1. ELEGIR ANIME -->
+    <section>
+        <div class="seccionHeader">
+            <h2>1. Elige un anime en tendencia</h2>
+            <input id="buscar" placeholder="Buscar anime...">
+        </div>
+        <div id="listaAnimes" class="grid"></div>
+    </section>
+
+    <!-- 2. OPCIONES -->
+    <section class="opciones">
+        <h2>2. Ajusta el estilo</h2>
+        <div class="formulario">
+            <label>Estilo
+                <select id="estilo"></select>
+            </label>
+            <label>Enfoque
+                <select id="enfoque"></select>
+            </label>
+            <label>Ánimo
+                <select id="animo"></select>
+            </label>
+        </div>
+        <div class="botones">
+            <button id="btnGenerar" class="principal">⚡ Generar idea</button>
+            <button id="btnSorpresa">🎲 Sorpréndeme</button>
+        </div>
+    </section>
+
+    <!-- 3. RESULTADO -->
+    <section id="resultado" class="oculto">
+        <div class="resultadoHeader">
+            <h2>3. Tu idea</h2>
+            <div class="botones">
+                <button id="btnOtra">🔄 Otra versión</button>
+                <button id="btnCopiar">📋 Copiar</button>
+                <button id="btnFavorito">⭐ Guardar</button>
+            </div>
+        </div>
+        <article id="idea"></article>
+    </section>
+
+    <!-- FAVORITOS -->
+    <section>
+        <h2>⭐ Ideas guardadas</h2>
+        <ul id="listaFavoritos"></ul>
+    </section>
+
+</main>
+
+<div id="aviso"></div>
+
+<script src="data.js"></script>
 <script src="app.js"></script>
-
 </body>
-
 </html>
